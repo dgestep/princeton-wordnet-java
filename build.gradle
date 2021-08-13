@@ -1,0 +1,124 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.3'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+    id 'checkstyle'
+    id "com.github.spotbugs" version "4.5.0"
+}
+
+group = 'com.estep'
+version = '1.0.0'
+sourceCompatibility = '1.8'
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+repositories {
+    mavenCentral()
+}
+
+def jmockitVersion = '1.49'
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter:2.5.3'
+    implementation 'com.google.guava:guava:30.1.1-jre'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'org.apache.commons:commons-collections4:4.4'
+    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'org.apache.opennlp:opennlp-tools:1.9.3'
+    implementation 'com.google.code.findbugs:annotations:3.0.1u2'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.3'
+    testImplementation "org.jmockit:jmockit:$jmockitVersion"
+}
+
+test {
+    jvmArgs "-javaagent:${classpath.find { it.name.contains("jmockit") }.absolutePath}"
+    println(jvmArgs)
+    useJUnitPlatform()
+}
+// disabling this allows the app to build without the need of a Spring Boot Main class.
+bootJar {
+    enabled = false
+}
+// enabling this tells Gradle just to build a JAR and not a Spring Boot enabled JAR.
+jar {
+    enabled = true
+}
+
+checkstyle {
+    sourceSets = [project.sourceSets.main]
+    ignoreFailures = false
+    configFile = file("$project.buildDir/../config/checkstyle/proj-checkstyle.xml")
+    reportsDir = file("$project.buildDir/reports/checkstyle")
+    showViolations = true
+    toolVersion "8.5"
+}
+
+spotbugs {
+    ignoreFailures = false
+    reportsDir = file("$project.buildDir/reports/findbugs")
+    effort = "max"
+    reportLevel = "high"
+}
+
+// ignore spotbugs for the unit tests
+spotbugsTest.enabled = false
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = 'princeton-wordnet-java'
+                description = 'Taken from https://wordnet.princeton.edu, WordNet is a large lexical database of English words. This project is a library written for Java to access WordNet. '
+                url = 'https://estepsoftwareforensics.com'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'douglas.estep'
+                        name = 'Doug Estep'
+                        email = 'douglas.estep@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/dgestep/princeton-wordnet-java.git'
+                    developerConnection = 'scm:git:https://github.com/dgestep/princeton-wordnet-java.git'
+                    url = 'https://estepsoftwareforensics.com'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            url = layout.buildDirectory.dir('libs')
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+javadoc {
+    if (JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}
