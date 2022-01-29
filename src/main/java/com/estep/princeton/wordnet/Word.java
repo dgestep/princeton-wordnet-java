@@ -1,35 +1,29 @@
 /*
- Copyright (C) 2019. Doug Estep -- All Rights Reserved.
+ Copyright (C). Estep Software Forensics -- All Rights Reserved.
  Copyright Registration Number: TXU002159309.
- 
+
  This file is part of the Tag My Code application.
-  
- This application is protected under copyright laws and cannot be used, distributed, or copied without prior written 
- consent from Doug Estep.  Unauthorized distribution or use is strictly prohibited and punishable by domestic and 
- international law.
+
+ This application is protected under copyright laws and cannot be used, distributed, or copied without prior written
+ consent from Estep Software Forensics.  Unauthorized distribution or use is strictly prohibited and punishable by
+ domestic and international law.
  
  Proprietary and confidential.
  */
 package com.estep.princeton.wordnet;
 
-import com.google.common.base.Objects;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Data container for a word in the dictionary.
+ * Represents a word in the {@link WordDictionary} and its definition data.
  */
-// CHECKSTYLE:OFF
-@SuppressFBWarnings
 public class Word {
     private final String word;
     private List<Definition> definitions;
 
     /**
-     * Creates this word.
+     * Creates an instance of this Word.
      *
      * @param word the word.
      */
@@ -38,37 +32,62 @@ public class Word {
         definitions = new ArrayList<>();
     }
 
+    /**
+     * Returns this word.
+     *
+     * @return the word.
+     */
     public String getWord() {
         return word;
     }
 
+    /**
+     * Returns a list of definitions associated with this word.
+     *
+     * @return the list of definitions or empty list if none exist.
+     */
     public List<Definition> getDefinitions() {
-        return definitions;
+        return definitions == null ? new ArrayList<>() : definitions;
     }
 
+    /**
+     * Sets the list of definitions associated with this word.
+     *
+     * @param definitions the list.
+     */
     public void setDefinitions(List<Definition> definitions) {
         this.definitions = definitions;
     }
 
+
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .append("word", word)
-                .append("definitions", definitions)
-                .toString();
+        return "word=" + word
+                + "definitions=" + definitions;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Word word1 = (Word) o;
-        return Objects.equal(word, word1.word);
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Word other = (Word) obj;
+        if (word == null) {
+            if (other.word != null)
+                return false;
+        } else if (!word.equals(other.word))
+            return false;
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(word);
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((word == null) ? 0 : word.hashCode());
+        return result;
     }
 }
-// CHECKSTYLE:ON

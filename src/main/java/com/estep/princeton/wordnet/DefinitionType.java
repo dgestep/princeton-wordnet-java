@@ -1,19 +1,19 @@
 /*
- Copyright (C) 2019. Doug Estep -- All Rights Reserved.
+ Copyright (C). Estep Software Forensics -- All Rights Reserved.
  Copyright Registration Number: TXU002159309.
- 
+
  This file is part of the Tag My Code application.
-  
- This application is protected under copyright laws and cannot be used, distributed, or copied without prior written 
- consent from Doug Estep.  Unauthorized distribution or use is strictly prohibited and punishable by domestic and 
- international law.
+
+ This application is protected under copyright laws and cannot be used, distributed, or copied without prior written
+ consent from Estep Software Forensics.  Unauthorized distribution or use is strictly prohibited and punishable by
+ domestic and international law.
  
  Proprietary and confidential.
  */
 package com.estep.princeton.wordnet;
 
 /**
- * Represents a definition for a word.
+ * An enumeration representing the type for the word (noun, verb, adverb, or adjective).
  */
 public enum DefinitionType {
     /**
