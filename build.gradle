@@ -6,7 +6,7 @@ plugins {
     id 'signing'
 }
 
-group = 'com.estep'
+group = 'com.estepsoftwareforensics'
 version = '1.0.0'
 targetCompatibility = 1.11
 sourceCompatibility = 1.11

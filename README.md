@@ -102,17 +102,17 @@ You can include this project using Gradle or Maven.
 
 ### Gradle (Short)
 ```text
-    implementation 'com.estep:princeton-wordnet-java:1.0.0'
+    implementation 'com.estepsoftwareforensics:princeton-wordnet-java:1.0.0'
 ```
 ### Gradle
 ```text
-    implementation group: 'com.estep', name: 'princeton-wordnet-java', version: '1.0.0'
+    implementation group: 'com.estepsoftwareforensics', name: 'princeton-wordnet-java', version: '1.0.0'
 ```
 
 ### Maven POM
 ```xml
 <dependency>
-    <groupId>com.estep</groupId>
+    <groupId>com.estepsoftwareforensics</groupId>
     <artifactId>princeton-wordnet-java</artifactId>
     <version>1.0.0</version>
 </dependency>
