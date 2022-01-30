@@ -60,9 +60,12 @@ publishing {
                 }
             }
             pom {
-                name = 'princeton-wordnet-java'
-                description = 'Taken from https://wordnet.princeton.edu, WordNet is a large lexical database of ' +
-                        'English words. This project is a library written for Java programs to access WordNet. '
+                name = 'com.estepsoftwareforensics:princeton-wordnet-java'
+                description = 'Princeton WordNet for Java is a simple API which provides access to an english ' +
+                        'dictionary that is backed by the Princeton University WordNet datasets. This is intended to ' +
+                        'be a third-party supporting library to any application that requires an english word ' +
+                        'dictionary -- providing the ability to lookup a word, get its many definitions, and get ' +
+                        'the list of synonyms and any related words.'
                 url = 'https://estepsoftwareforensics.com'
                 licenses {
                     license {
@@ -75,6 +78,8 @@ publishing {
                         id = 'douglas.estep'
                         name = 'Doug Estep'
                         email = 'douglas.estep@gmail.com'
+                        organization = 'Estep Software Forensics'
+                        organizationUrl = 'https://estepsoftwareforensics.com'
                     }
                 }
                 scm {
@@ -87,7 +92,15 @@ publishing {
     }
     repositories {
         maven {
-            url = layout.buildDirectory.dir('libs')
+            // uncomment out if publishing to local maven repository
+//            url = layout.buildDirectory.dir('libs')
+
+            // publishing to maven centry
+            url = project.property('artificatoryContextUrl')
+            credentials {
+                username = project.property('artifactoryUserName')
+                password = project.property('artifactoryPassword')
+            }
         }
     }
 }
