@@ -84,18 +84,6 @@ public class YourSpringClass {
 }
 ```
 
-The WordDictionary implementation does not have any dependencies. Because of that, it is not a
-requirement that your application uses Spring Boot. You can simply instantiate
-the WordDictionaryImpl class and call the desired methods.
-
-```java
-WordDictionary wordDictionary = new WordDictionaryImpl();
-
-// call the methods using the wordDictionary instance
-Word word = wordDictionary.lookup("earth");
-```
-
-
 ## Maven or Gradle
 
 You can include this project using Gradle or Maven.
